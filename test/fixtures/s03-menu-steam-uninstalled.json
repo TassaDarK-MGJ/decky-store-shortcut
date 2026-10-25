@@ -1,0 +1,268 @@
+{
+  "thisKind": "Be",
+  "propKeys": [
+    "navigator",
+    "instance",
+    "overview",
+    "client",
+    "launchSource",
+    "bInGamepadUI",
+    "hasCustomArtwork",
+    "onChangeArtwork",
+    "strCollectionId",
+    "ownerWindow"
+  ],
+  "overview": {
+    "appid": 100001,
+    "app_type": 1,
+    "modOrShortcut": false
+  },
+  "liveCheck": {
+    "appid": 100001,
+    "app_type": 1,
+    "modOrShortcut": false
+  },
+  "strCollectionId": "steamos",
+  "includeMultiSelect": null,
+  "bInGamepadUI": true,
+  "omitPrimaryAction": null,
+  "client": "mostavailable",
+  "getTargetApps": [
+    100001
+  ],
+  "strategy1_appAppid": 100001,
+  "strategy2_ownerOverviewAppid": null,
+  "ret": {
+    "type": "m",
+    "childrenIsArray": true,
+    "childrenLen": 12,
+    "anchorIdx": 11
+  },
+  "items": [
+    {
+      "type": "T",
+      "key": null,
+      "props": [
+        "className",
+        "onSelected"
+      ],
+      "launchSource": true,
+      "appProperties": false,
+      "label": null,
+      "children": [
+        {
+          "type": "p",
+          "key": null,
+          "props": [],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null
+        },
+        {
+          "primitive": "string"
+        }
+      ]
+    },
+    {
+      "empty": "undefined"
+    },
+    {
+      "empty": "false"
+    },
+    {
+      "type": "T",
+      "key": null,
+      "props": [
+        "onSelected"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null
+    },
+    {
+      "type": "v",
+      "key": null,
+      "props": [
+        "label"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": "<string>",
+      "children": [
+        {
+          "type": "T",
+          "key": "add-all-to-new",
+          "props": [
+            "onSelected"
+          ],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null,
+          "children": [
+            {
+              "type": "Pe",
+              "key": null,
+              "props": [],
+              "launchSource": false,
+              "appProperties": false,
+              "label": null
+            },
+            {
+              "primitive": "string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "empty": "false"
+    },
+    {
+      "type": "ue",
+      "key": null,
+      "props": [
+        "rgApps"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null
+    },
+    {
+      "type": "v",
+      "key": null,
+      "props": [
+        "label"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": "<string>",
+      "children": [
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "type": "T",
+          "key": null,
+          "props": [
+            "onSelected"
+          ],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null
+        },
+        {
+          "type": "Me",
+          "key": null,
+          "props": [
+            "rgApps"
+          ],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null
+        },
+        {
+          "type": "pt",
+          "key": null,
+          "props": [
+            "app"
+          ],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        },
+        {
+          "empty": "false"
+        }
+      ]
+    },
+    {
+      "type": "lt",
+      "key": null,
+      "props": [
+        "rgApps"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null
+    },
+    {
+      "type": "HLTBContextMenuItem",
+      "key": null,
+      "props": [
+        "appId"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null
+    },
+    {
+      "type": "T",
+      "key": "sgdb-change-artwork",
+      "props": [
+        "onSelected"
+      ],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null
+    },
+    {
+      "type": "Symbol(react.fragment)",
+      "key": null,
+      "props": [],
+      "launchSource": false,
+      "appProperties": false,
+      "label": null,
+      "children": [
+        {
+          "type": "E",
+          "key": null,
+          "props": [],
+          "launchSource": false,
+          "appProperties": false,
+          "label": null
+        },
+        {
+          "type": "T",
+          "key": null,
+          "props": [
+            "onSelected"
+          ],
+          "launchSource": false,
+          "appProperties": true,
+          "label": null
+        }
+      ]
+    }
+  ],
+  "_note": "S0.3 probe dump, Gamepad UI, build 1792618285, 2026-10-25. appid replaced by a placeholder."
+}

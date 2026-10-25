@@ -17,6 +17,7 @@
     ["M2 NavigateToExternalWeb", (id) => D.Navigation.NavigateToExternalWeb(`https://store.steampowered.com/app/${id}/`)],
     ["M3 Apps.ShowStore", (id) => SteamClient.Apps.ShowStore(id)],
     ["M4 URL.ExecuteSteamURL", (id) => SteamClient.URL.ExecuteSteamURL(`steam://store/${id}`)],
+    ["M5 NavigateToSteamWeb https", (id) => D.Navigation.NavigateToSteamWeb(`https://store.steampowered.com/app/${id}/`)],
   ];
 
   const patch = D.afterPatch(Cls.prototype, "render", function (_args, ret) {
@@ -25,6 +26,7 @@
       if (apps.length !== 1 || !apps[0]) return ret;
       const ov = apps[0];
       const appid = ov.appid;
+      const win = this.props?.ownerWindow;
       if (ov.BIsModOrShortcut?.()) return ret;
       const kids = ret?.props?.children;
       if (!Array.isArray(kids)) return ret;
@@ -46,8 +48,8 @@
                 }
                 // Record whether a context menu is still around shortly after navigating.
                 setTimeout(() => {
-                  const menus = document.querySelectorAll("[class*='contextMenu'], [class*='ContextMenu']").length;
-                  console.log(`[SS-PROBE:S0.4] ${label} +${Date.now() - t0}ms contextMenuNodes=${menus} path=${location.pathname}`);
+                  const menus = (win?.document ?? document).querySelectorAll("[class*='contextMenu'], [class*='ContextMenu']").length;
+                  console.log(`[SS-PROBE:S0.4] ${label} +${Date.now() - t0}ms contextMenuNodes=${menus} ownerWindow=${!!win} path=${location.pathname}`);
                 }, 800);
               },
             },
