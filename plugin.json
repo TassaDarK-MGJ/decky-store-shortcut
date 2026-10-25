@@ -1,0 +1,11 @@
+{
+  "name": "Store Shortcut",
+  "author": "Store Shortcut contributors",
+  "flags": ["debug"],
+  "api_version": 1,
+  "publish": {
+    "tags": ["library", "store", "utility"],
+    "description": "Adds a \"Go to store page\" entry to the context menu of Steam library capsules.",
+    "image": ""
+  }
+}
