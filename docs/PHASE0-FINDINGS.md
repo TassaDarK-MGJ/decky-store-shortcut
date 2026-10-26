@@ -208,3 +208,37 @@ removed on unpatch.
 
 Correction: the `RegisterOnActionDescriptionsChangedCallback` console line seen on 2026-10-26
 comes from the Steam **web view's** gamepad bridge (store page), not from the library footer.
+
+### S0.5–S0.7 in Game Mode (2026-10-26, build 1792618285): done
+
+Method 13.6 (d). Probes `s05-focus`, `s06-buttons`, `s07-footer` installed together; recording
+`.spikes/phase2.jsonl` (230 lines). Covered: Home recents, Library tabs Installed / All /
+SteamOS-compatible / Desktop apps (non-Steam shortcuts), side menu, QAM, context menu open.
+Not covered: a game's detail page.
+
+**S0.5, appid of the focused capsule.** Only one footer store instance. On every capsule, in every
+view, the focused node's element is the capsule `DIV` (DOM focus follows: `activeElement` matches)
+and the fiber chain has `memoizedProps.app.appid` at **depth 10** (Home: props `app`, `bFeatured`,
+`bPrefer2xImage`…; Library grid: `app`, `navRef`, `strCollectionId`…). Home also has a bare `appid`
+at depth 20. Non-Steam shortcuts: same shape, `BIsModOrShortcut()` → `true`. Tabs, the search box,
+the side menu and the QAM: no appid within 40 levels. With the context menu open, the focused
+node is a menu item with `overview.appid` at depth 12–13 (the menu instance), **no** `app.appid`.
+Rule adopted: walk at most 11 levels up from the node's element, take the first `app.appid`,
+then the common validation (5.4).
+
+**S0.6, button hooks.** L3 and R3 pressed on capsules (Home, Installed, SteamOS-compatible) and
+with the context menu open. Steam does nothing visible with either, anywhere tested.
+- **H1 (`RegisterForUnhandledButtonDownEvents`) fires for every press**: `detail.button` 15/16,
+  `is_repeat: false`, `source: 1`, `target` = the focused capsule element, so the appid can be
+  resolved from the event itself. The tree log shows `unhandled: false` only because a registered
+  H1 callback counts as handling.
+- H1 **also fires with the context menu open** (target = menu item in `ModalDialogOverlay_Modal_N`).
+  The app.appid rule above returns null there, so nothing happens. Keep that rule for the button.
+- H3 (`RegisterForControllerInputMessages`) works too: callback `(controllerIndex, rawButton,
+  pressed)`, L3 = 25, R3 = 41. It brings no element and fires for every button, so it is not needed.
+- L3 is free in every view tested: the default stays **L3** (8.3).
+
+**S0.7, footer (F4).** Patching the footer store prototype's `SetActionsFromMap` works:
+"[S0.7] L3" and "[S0.7] R3" show **with their glyphs** while a Steam capsule is focused, move with
+the focus, disappear on non-capsules, non-Steam shortcuts and the context menu, and go away on
+unpatch. F4 is the footer approach for H2.
