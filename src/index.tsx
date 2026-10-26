@@ -1,34 +1,48 @@
-import {
-  PanelSection,
-  PanelSectionRow,
-  quickAccessMenuClasses,
-} from "@decky/ui";
+import { quickAccessMenuClasses } from "@decky/ui";
 import { definePlugin } from "@decky/api";
 import { FaStore } from "react-icons/fa";
+import { log, setDebugLogging } from "./core/log";
+import { startContextMenu } from "./features/contextMenu";
+import { resolveLanguage, setLanguage } from "./i18n";
+import { Panel } from "./settings/Panel";
+import { getSettings, loadSettings, subscribeSettings } from "./settings/store";
 
-// H0 skeleton: loads in Decky and does nothing else.
-// Feature A (context menu entry) is implemented in H1.
+// Phase 1: Feature A only (context menu entry). See the design doc, section 1.1.
 
-function Content() {
-  return (
-    <PanelSection title="Store Shortcut">
-      <PanelSectionRow>
-        <div>H0: skeleton build, no features yet.</div>
-      </PanelSectionRow>
-    </PanelSection>
-  );
+let steamLanguage: string | null = null;
+
+function applySettings(): void {
+  const s = getSettings();
+  setDebugLogging(s.debug_logging);
+  setLanguage(resolveLanguage(s.language, steamLanguage, navigator.language));
+}
+
+async function detectSteamLanguage(): Promise<void> {
+  try {
+    steamLanguage = (await window.SteamClient?.Settings?.GetCurrentLanguage?.()) ?? null;
+  } catch (e) {
+    log.warn("could not read Steam's language:", e);
+  }
+  applySettings();
 }
 
 export default definePlugin(() => {
-  console.log("[StoreShortcut] frontend loaded (H0 skeleton)");
+  const unsubscribe = subscribeSettings(applySettings);
+  applySettings();
+  // Patches go in synchronously and read the settings cache at use time (9.4).
+  const contextMenu = startContextMenu();
+  void loadSettings();
+  void detectSteamLanguage();
 
   return {
     name: "Store Shortcut",
     titleView: <div className={quickAccessMenuClasses.Title}>Store Shortcut</div>,
-    content: <Content />,
+    content: <Panel menuStatus={contextMenu.status} />,
     icon: <FaStore />,
     onDismount() {
-      console.log("[StoreShortcut] frontend unloaded");
+      contextMenu.stop();
+      unsubscribe();
+      log.info("unloaded");
     },
   };
 });

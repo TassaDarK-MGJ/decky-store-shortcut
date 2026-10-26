@@ -11,7 +11,7 @@
     "watch": "rollup -c -w",
     "cdp": "node scripts/cdp.mjs",
     "deploy": "bash scripts/deploy.sh",
-    "test": "echo \"No tests yet (added in H1)\" && exit 0"
+    "test": "vitest run"
   },
   "keywords": [
     "decky",
@@ -28,7 +28,8 @@
     "@types/react-dom": "19.1.1",
     "@types/webpack": "^5.28.5",
     "rollup": "^4.53.3",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.7"
   },
   "dependencies": {
     "@decky/api": "^1.1.3",
