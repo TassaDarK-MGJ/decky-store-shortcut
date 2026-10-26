@@ -144,3 +144,67 @@ Decisions:
 
 Decky injects `DFL` into the desktop client's SharedJSContext (Steam started with `-steamdeck`).
 Gamepad UI behaviour is tested in Game Mode instead (method 13.6 d).
+
+## Phase 2 spikes
+
+### S0.0 a–d static analysis (2026-10-26, build 1792618285): done
+
+Bounded searches over `~/.steam/steam/steamui/sp.js` (Python, `-I`). Only identifiers and prose
+here (rule 11.1). All findings are **[VE]**: they say what the code does, not what happens at runtime.
+
+**(a) Unhandled button events.** Path of a button-down in a nav tree:
+1. The event is dispatched to the focused element. Only OK, CANCEL, SECONDARY, OPTIONS and START
+   have a *logical* event (`vgp_onok`…`vgp_onmenu`); D-pad goes to `vgp_ondirection`.
+   **L3/R3 have no logical event.**
+2. If still unhandled: `TryRootButtonListeners` (handlers added with the tree's
+   `RegisterGlobalButtonHandler` and `RegisterOnUnhandledButtonCallback`).
+3. If still unhandled: the controller's `FireUnhandledGamepadEventCallbacks`, which dispatches to
+   everything registered with `RegisterForUnhandledButtonDownEvents` (H1).
+
+Steam itself registers two such callbacks: one only plays the "failed navigation" sound for
+the D-pad; the other handles only the Steam and QAM buttons. Neither touches L3/R3. The event
+passed along is the original one, so its `target` should be the focused element (to confirm in S0.6).
+
+**(b) L3/R3 as navigation buttons.** The raw-to-nav table maps
+`GAMEPAD_LEFTSTICK_CLICK` → `LSTICK_CLICK` (15) and `GAMEPAD_RIGHTSTICK_CLICK` → `RSTICK_CLICK` (16),
+so they do reach the nav layer. Every use of `LSTICK_CLICK`/`RSTICK_CLICK` in the bundle:
+- the table itself and the enum;
+- keyboard emulation (Ctrl+F6/F7, Ctrl+6/7);
+- the hardware-test field (any button counts as input);
+- the virtual keyboard: L3 toggles Caps Lock (only while the keyboard is open);
+- a VR-overlay button-to-icon switch.
+
+**No library, Home or capsule component handles L3 or R3.** The only library capsule that opens
+`LibraryContextMenu` (the one passing `hasCustomArtwork`) has no `onButtonDown` nearby. So L3/R3
+on a capsule should end up in step 3 above, and H1 is the expected hook. L3 as the default (8.3)
+looks safe statically.
+
+**(c) Footer legend.** The footer is a store class (module exports `Ww`, alongside the footer button
+enum `g4`, the nav→footer converter `sr` and the footer→nav converter `ck`). On every focus change it
+takes the focused nav node, calls `GetActiveActionDescriptions()` (which merges
+`actionDescriptionMap` from the node up to the root, child first), subscribes to
+`ActionDescriptionChangedCallbackList` of each ancestor, and converts the result with
+`SetActionDescriptionsFromMap` → `SetActionsFromMap`. The focused node is kept in
+`m_nodeForCurrentDescriptions`.
+
+**Blocker for F1/F2 as designed:** the nav→footer converter has no case for `LSTICK_CLICK` or
+`RSTICK_CLICK`; they fall to the default, which is the footer's **A** button. Putting
+`{[LSTICK_CLICK]: label}` in any `actionDescriptionMap` (F1, F2, or the tree's
+`RegisterGlobalButtonHandler` description) would **overwrite the A label** instead of showing L3.
+
+**(d) Glyph.** The footer renders every footer-enum button that has a description (Home, A and B
+in fixed places, the rest in between), with a glyph component that has cases for
+`LeftStickClick` (17, aria-label `#ControllerButton_L3`) and `RightStickClick` (19). So the footer
+**can draw L3/R3**: it only needs an action keyed by the footer enum, not by the nav enum.
+Tapping that legend calls `ck(17)` = `INVALID`, which does nothing (harmless).
+
+**Consequence: new footer approach F4 (replaces F1 as first choice).** Patch the footer store's
+prototype (`SetActionsFromMap`, found with `findModuleExport` by its methods) so that, when
+`this.m_nodeForCurrentDescriptions` is a library capsule of a Steam game, the map gets
+`{17 or 19: label}`. Because `SetActionsFromMap` drops keys missing from the new map, the entry
+disappears by itself when focus moves. The same node (`m_element` → fiber) is what S0.5 must
+resolve to an appid. To verify in S0.7: the glyph shows, refreshes on focus change, and is
+removed on unpatch.
+
+Correction: the `RegisterOnActionDescriptionsChangedCallback` console line seen on 2026-10-26
+comes from the Steam **web view's** gamepad bridge (store page), not from the library footer.
