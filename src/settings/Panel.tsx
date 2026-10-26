@@ -1,6 +1,6 @@
 import { DropdownItem, PanelSection, PanelSectionRow, ToggleField } from "@decky/ui";
 import type { FeatureStatus } from "../features/contextMenu";
-import { t, type LanguageSetting } from "../i18n";
+import { LANGS, LANGUAGE_NAMES, t, type LanguageSetting } from "../i18n";
 import { setSetting, useSettings } from "./store";
 
 // Quick Access Menu panel (design 9.3), Phase 1 subset: Feature A only.
@@ -16,8 +16,7 @@ export function Panel({ menuStatus }: { menuStatus: FeatureStatus }) {
 
   const languages: { data: LanguageSetting; label: string }[] = [
     { data: "auto", label: t("panel_language_auto") },
-    { data: "en", label: "English" },
-    { data: "es", label: "Español" },
+    ...LANGS.map((lang) => ({ data: lang, label: LANGUAGE_NAMES[lang] })),
   ];
 
   return (

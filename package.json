@@ -1,6 +1,6 @@
 {
   "name": "decky-store-shortcut",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Decky plugin: open the Steam store page of a library game from its context menu",
   "type": "module",
   "packageManager": "pnpm@9.15.9",

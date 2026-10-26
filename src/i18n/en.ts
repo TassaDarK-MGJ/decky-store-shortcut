@@ -10,7 +10,6 @@ export const en = {
   status_menu_active: "Context menu: active",
   status_menu_disabled: "Context menu: turned off",
   status_menu_unavailable: "Context menu: unavailable ({reason})",
-  status_starting: "Context menu: starting…",
 };
 
 export type Strings = typeof en;

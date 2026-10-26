@@ -100,10 +100,18 @@ async function record(outFile) {
   const target = await pickTarget();
   const c = await connect(target.webSocketDebuggerUrl);
   c.on((msg) => {
-    if (msg.method !== "Runtime.consoleAPICalled") return;
-    const text = msg.params.args.map((a) => a.value ?? a.description ?? a.type).join(" ");
+    let level, text;
+    if (msg.method === "Runtime.consoleAPICalled") {
+      level = msg.params.type;
+      text = msg.params.args.map((a) => a.value ?? a.description ?? a.type).join(" ");
+    } else if (msg.method === "Runtime.exceptionThrown") {
+      // Uncaught errors (e.g. React's minified #185) never reach the console API.
+      const d = msg.params.exceptionDetails;
+      level = "exception";
+      text = d.exception?.description ?? d.text;
+    } else return;
     if (filterOpt && !text.includes(filterOpt)) return;
-    const line = JSON.stringify({ t: new Date().toISOString(), level: msg.params.type, text });
+    const line = JSON.stringify({ t: new Date().toISOString(), level, text });
     appendFileSync(outFile, line + "\n");
   });
   await c.send("Runtime.enable");

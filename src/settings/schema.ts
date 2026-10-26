@@ -1,6 +1,6 @@
 // Phase 1 settings (design 9.1). Mirrors SCHEMA in main.py: the backend is the
 // authority, this copy only guards the frontend against a malformed reply.
-import type { LanguageSetting } from "../i18n";
+import { LANGS, type LanguageSetting } from "../i18n";
 
 export interface Settings {
   menu_item_enabled: boolean;
@@ -14,7 +14,7 @@ export const DEFAULT_SETTINGS: Settings = {
   debug_logging: false,
 };
 
-const LANGUAGES: readonly LanguageSetting[] = ["auto", "en", "es"];
+const LANGUAGES: readonly LanguageSetting[] = ["auto", ...LANGS];
 
 export function sanitizeSettings(raw: unknown): Settings {
   const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;

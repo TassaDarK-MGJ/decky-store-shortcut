@@ -10,7 +10,7 @@ import decky
 # Unknown keys are rejected, so Phase 2 keys cannot appear by accident.
 SCHEMA = {
     "menu_item_enabled": {"type": bool, "default": True},
-    "language": {"type": str, "default": "auto", "choices": ("auto", "en", "es")},
+    "language": {"type": str, "default": "auto", "choices": ("auto", "en", "fr", "es", "it", "de")},
     "debug_logging": {"type": bool, "default": False},
 }
 

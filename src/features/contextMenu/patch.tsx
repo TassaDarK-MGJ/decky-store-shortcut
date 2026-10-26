@@ -71,9 +71,10 @@ export function patchContextMenu(menuClass: any): () => void {
   }
 
   // The Menu element's type is a function component that renders the inner class.
-  // Wrapping it on one element is enough to learn that class once.
+  // Wrapping it on one element is enough to learn that class once. The handle is kept
+  // like every other one (design 4.3), even though it only touches that element.
   function hookMenuType(element: any): void {
-    afterPatch(element, "type", (_args, rendered) => {
+    handles.push(afterPatch(element, "type", (_args, rendered) => {
       safe(
         "menu type hook",
         () => {
@@ -86,7 +87,7 @@ export function patchContextMenu(menuClass: any): () => void {
         undefined,
       );
       return rendered;
-    });
+    }));
   }
 
   handles.push(

@@ -12,5 +12,4 @@ export const es: Strings = {
   status_menu_active: "Menú contextual: activo",
   status_menu_disabled: "Menú contextual: desactivado",
   status_menu_unavailable: "Menú contextual: no disponible ({reason})",
-  status_starting: "Menú contextual: iniciando…",
 };
