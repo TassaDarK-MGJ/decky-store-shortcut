@@ -6,10 +6,12 @@ import os
 
 import decky
 
-# Phase 1 settings (design 9.1). src/settings/schema.ts mirrors this.
-# Unknown keys are rejected, so Phase 2 keys cannot appear by accident.
+# Settings (design 9.1). src/settings/schema.ts mirrors this. Unknown keys are rejected.
 SCHEMA = {
     "menu_item_enabled": {"type": bool, "default": True},
+    "shortcut_button": {"type": str, "default": "l3", "choices": ("off", "l3", "r3")},
+    "show_footer_hint": {"type": bool, "default": True},
+    "unavailable_feedback": {"type": bool, "default": True},
     "language": {"type": str, "default": "auto", "choices": ("auto", "en", "fr", "es", "it", "de")},
     "debug_logging": {"type": bool, "default": False},
 }

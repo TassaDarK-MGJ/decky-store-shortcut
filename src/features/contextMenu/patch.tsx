@@ -9,7 +9,7 @@ import { afterPatch, MenuItem, type Patch } from "@decky/ui";
 import { fromContextMenu } from "../../core/appid";
 import { safe } from "../../core/guard";
 import { log } from "../../core/log";
-import type { AppOverviewLike } from "../../core/steamTypes";
+import { lookupOverview } from "../../core/steam";
 import { openStorePage } from "../../core/store";
 import { t } from "../../i18n";
 import { getSettings } from "../../settings/store";
@@ -19,10 +19,6 @@ import { insertBeforeAnchor, isAppContextMenu, removeByKey } from "./menuItems";
 interface OuterInfo {
   appid: number | null;
   single: boolean;
-}
-
-function lookupOverview(appid: number): AppOverviewLike | null {
-  return window.appStore?.GetAppOverviewByAppID?.(appid) ?? null;
 }
 
 function targetCount(menu: any): number {
@@ -49,7 +45,7 @@ export function patchContextMenu(menuClass: any): () => void {
     const { appid } = resolved;
     const { anchored } = insertBeforeAnchor(
       items,
-      <MenuItem key={ITEM_KEY} onSelected={() => safe("open store page", () => openStorePage(appid), false)}>
+      <MenuItem key={ITEM_KEY} onSelected={() => void openStorePage(appid)}>
         {t("menu_item")}
       </MenuItem>,
     );

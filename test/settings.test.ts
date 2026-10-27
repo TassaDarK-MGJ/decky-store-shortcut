@@ -9,8 +9,21 @@ import { DEFAULT_SETTINGS, sanitizeSettings } from "../src/settings/schema";
 
 describe("sanitizeSettings", () => {
   it("keeps valid values", () => {
-    const s = { menu_item_enabled: false, language: "es", debug_logging: true };
+    const s = {
+      menu_item_enabled: false,
+      shortcut_button: "r3",
+      show_footer_hint: false,
+      unavailable_feedback: false,
+      language: "es",
+      debug_logging: true,
+    };
     expect(sanitizeSettings(s)).toEqual(s);
+  });
+  it("defaults the shortcut to L3 with its hint and notice on (design 9.1, 17.1)", () => {
+    expect(DEFAULT_SETTINGS).toMatchObject({ shortcut_button: "l3", show_footer_hint: true, unavailable_feedback: true });
+  });
+  it("rejects an unknown shortcut button", () => {
+    expect(sanitizeSettings({ shortcut_button: "start" }).shortcut_button).toBe("l3");
   });
   it("accepts every supported language", () => {
     for (const language of ["auto", ...LANGS]) expect(sanitizeSettings({ language }).language).toBe(language);
@@ -20,7 +33,7 @@ describe("sanitizeSettings", () => {
     expect(sanitizeSettings({ menu_item_enabled: "yes", language: "pt", debug_logging: 1 })).toEqual(DEFAULT_SETTINGS);
   });
   it("drops unknown keys", () => {
-    expect(sanitizeSettings({ shortcut_button: "l3" })).toEqual(DEFAULT_SETTINGS);
+    expect(sanitizeSettings({ footer_glyph: "l3" })).toEqual(DEFAULT_SETTINGS);
   });
 });
 

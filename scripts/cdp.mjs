@@ -6,6 +6,7 @@
 //   node scripts/cdp.mjs eval '<js>' | eval <file.js>      evaluate in SharedJSContext
 //   node scripts/cdp.mjs record <out.jsonl> [--filter TEXT] record console output until Ctrl+C / SIGTERM
 //   node scripts/cdp.mjs probe <name>                      run probes/<name>.js
+//   node scripts/cdp.mjs watch-targets <out.jsonl>         log every change in the tab list (title, url)
 //
 // Option --tab "<title>" selects another target.
 import { readFileSync, existsSync, appendFileSync } from "node:fs";
@@ -127,10 +128,45 @@ async function record(outFile) {
   await new Promise(() => {});
 }
 
+// Polls the HTTP tab list instead of holding a WebSocket, so it keeps working across
+// Steam restarts. Logs one line per target that appears, changes URL/title or goes away.
+async function watchTargets(outFile) {
+  const log = (entry) => appendFileSync(outFile, JSON.stringify({ t: new Date().toISOString(), ...entry }) + "\n");
+  log({ event: "watching" });
+  let known = new Map();
+  let up = true;
+  for (;;) {
+    let list = null;
+    try {
+      list = await listTargets();
+    } catch {
+      if (up) log({ event: "cdp-down" });
+      up = false;
+    }
+    if (list) {
+      if (!up) log({ event: "cdp-up" });
+      up = true;
+      const now = new Map(list.map((t) => [t.id, { type: t.type, title: t.title, url: t.url }]));
+      for (const [id, t] of now) {
+        const old = known.get(id);
+        if (!old) log({ event: "new", id: id.slice(0, 8), ...t });
+        else if (old.url !== t.url || old.title !== t.title) log({ event: "changed", id: id.slice(0, 8), ...t });
+      }
+      for (const [id, t] of known) if (!now.has(id)) log({ event: "gone", id: id.slice(0, 8), title: t.title });
+      known = now;
+    }
+    await new Promise((r) => setTimeout(r, 300));
+  }
+}
+
 try {
   switch (cmd) {
     case "targets":
       for (const t of await listTargets()) console.log(`${t.type}\t${t.title}`);
+      break;
+    case "watch-targets":
+      if (!rest[0]) throw new Error("watch-targets needs an output file");
+      await watchTargets(rest[0]);
       break;
     case "eval":
       print(await evaluate(sourceOf(rest.join(" "))));

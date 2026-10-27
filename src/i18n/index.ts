@@ -2,6 +2,8 @@
 // from the setting or, on "auto", from Steam's own language.
 import { de } from "./de";
 import { en, type StringKey, type Strings } from "./en";
+
+export type { StringKey };
 import { es } from "./es";
 import { fr } from "./fr";
 import { it } from "./it";

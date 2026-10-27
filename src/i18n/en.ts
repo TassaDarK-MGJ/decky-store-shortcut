@@ -10,6 +10,21 @@ export const en = {
   status_menu_active: "Context menu: active",
   status_menu_disabled: "Context menu: turned off",
   status_menu_unavailable: "Context menu: unavailable ({reason})",
+  footer_hint: "Store page",
+  toast_no_store: "This game has no Steam store page",
+  panel_button: "Shortcut button",
+  panel_button_desc: "Opens the store page of the focused game",
+  panel_button_off: "Off",
+  panel_footer: "Show in the button bar",
+  panel_footer_desc: "Shows the shortcut at the bottom of the screen while a game is focused",
+  panel_feedback: "Notice for non-Steam games",
+  panel_feedback_desc: "Shows a message when the focused game has no store page",
+  status_button_active: "Shortcut button: {button}",
+  status_button_disabled: "Shortcut button: off",
+  status_button_unavailable: "Shortcut button: unavailable ({reason})",
+  status_footer_active: "Button bar: shown",
+  status_footer_disabled: "Button bar: hidden",
+  status_footer_unavailable: "Button bar: unavailable ({reason})",
 };
 
 export type Strings = typeof en;

@@ -1,12 +1,9 @@
 import { safe } from "../../core/guard";
 import { log } from "../../core/log";
 import { findLibraryContextMenu } from "./finder";
+import type { FeatureStatus } from "../status";
 import { patchContextMenu } from "./patch";
 
-export type FeatureStatus = { state: "active" } | { state: "unavailable"; reason: string };
-
-// Self-diagnosis (design 10): the result is shown in the panel, so a Steam update
-// that breaks the finder is visible instead of failing silently.
 export function startContextMenu(): { status: FeatureStatus; stop: () => void } {
   const found = safe("context menu finder", findLibraryContextMenu, { ok: false, reason: "finder error" } as const);
   if (!found.ok) {
