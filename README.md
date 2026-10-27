@@ -23,6 +23,17 @@ The plugin makes no network requests of its own.
 
 Device checks and known issues: `docs/device-checklist.md`.
 
+## Install
+
+The plugin is not in the Decky store; install it from a GitHub release:
+
+1. Download `Store-Shortcut-vX.Y.Z.zip` from the
+   [latest release](https://github.com/TassaDarK-MGJ/decky-store-shortcut/releases/latest).
+2. In Decky's settings, turn on **Developer mode** (General).
+3. Developer → **Install Plugin from ZIP File** → choose the zip.
+
+To update, install the newer zip the same way.
+
 ## Development
 
 Requirements: Decky Loader ≥ 3.0 with developer mode, Node 24 (`brew install node@24`),
