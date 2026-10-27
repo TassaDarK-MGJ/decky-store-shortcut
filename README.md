@@ -1,9 +1,11 @@
 # Store Shortcut
 
+![Store Shortcut: context menu entry and L3/R3 shortcut](docs/store-image.png)
+
 Decky Loader plugin for Steam Game Mode: opens a library game's store page without
 entering its game page first, from the capsule's context menu or with a button press.
 
-Status: **v1.1.1.** Both features work in Game Mode.
+Status: **v1.1.2.** Both features work in Game Mode.
 Languages: English, French, Spanish, Italian and German (follows Steam by default).
 
 - **Context menu entry:** "Go to store page" in the menu of a library capsule. Shown only

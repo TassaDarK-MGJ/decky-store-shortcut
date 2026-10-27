@@ -6,6 +6,6 @@
   "publish": {
     "tags": ["library", "store", "utility"],
     "description": "Open a library game's Steam store page from its context menu, or with L3/R3 while its capsule is focused.",
-    "image": ""
+    "image": "https://raw.githubusercontent.com/TassaDarK-MGJ/decky-store-shortcut/main/docs/store-image.png"
   }
 }
