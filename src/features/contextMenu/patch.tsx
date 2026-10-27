@@ -45,7 +45,7 @@ export function patchContextMenu(menuClass: any): () => void {
     const { appid } = resolved;
     const { anchored } = insertBeforeAnchor(
       items,
-      <MenuItem key={ITEM_KEY} onSelected={() => void openStorePage(appid)}>
+      <MenuItem key={ITEM_KEY} onSelected={() => safe("open store page", () => openStorePage(appid), false)}>
         {t("menu_item")}
       </MenuItem>,
     );

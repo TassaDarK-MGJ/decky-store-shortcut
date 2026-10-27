@@ -33,7 +33,7 @@ export function registerButton(controller: any): () => void {
       if (settings.unavailable_feedback) toaster.toast({ title: "Store Shortcut", body: t("toast_no_store") });
       return;
     }
-    void openStorePage(app.appid);
+    openStorePage(app.appid);
   }
 
   const registration = controller.RegisterForUnhandledButtonDownEvents((event: UnhandledButtonEvent) =>

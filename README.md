@@ -1,21 +1,27 @@
 # Store Shortcut
 
-Decky Loader plugin for Steam Game Mode: adds **"Go to store page"** to the context
-menu of a library capsule, so you can open a game's store page without entering
-its game page first.
+Decky Loader plugin for Steam Game Mode: opens a library game's store page without
+entering its game page first, from the capsule's context menu or with a button press.
 
-Status: **v1.0.0, Phase 1 done.** The context menu entry works in Game Mode.
+Status: **v1.1.0.** Both features work in Game Mode.
 Languages: English, French, Spanish, Italian and German (follows Steam by default).
 
-- Phase 1: context menu entry. Shown only for Steam games (hidden for non-Steam
-  shortcuts and when several games are selected). Can be turned off in the plugin's
-  panel, which also shows whether the entry is active or why it is unavailable.
-- Phase 2 (next): configurable L3/R3 shortcut with a footer hint.
+- **Context menu entry:** "Go to store page" in the menu of a library capsule. Shown only
+  for Steam games (hidden for non-Steam shortcuts and when several games are selected).
+- **Shortcut button:** with a Steam game's capsule focused (Home or any Library tab), press
+  **L3** to open its store page. The button bar shows the L3 glyph with "Store page" while
+  such a capsule is focused. The button can be switched to **R3** or turned off, and the
+  hint can be hidden. On a non-Steam shortcut the button shows a short notice instead
+  (can be turned off). Steam leaves L3 and R3 unused in the library, so no native function
+  is taken over.
+
+Everything can be turned on or off in the plugin's panel, which also shows whether each
+part is active or why it is unavailable.
 
 Store pages open in Steam's own web view; **B** returns to where you were.
 The plugin makes no network requests of its own.
 
-Device checks: `docs/device-checklist.md`.
+Device checks and known issues: `docs/device-checklist.md`.
 
 ## Development
 

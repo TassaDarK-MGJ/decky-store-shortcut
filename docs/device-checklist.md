@@ -1,7 +1,7 @@
 # Device checklist (Game Mode, real controller)
 
 Design doc 14.3. Re-run after every Steam or Decky update. Each row: context × expected
-result. Fill in the status (✅ / ❌ / n/a) and the date. Feature A since v1.0.0; Feature B (L3/R3 shortcut) since H2.
+result. Fill in the status (✅ / ❌ / n/a) and the date. Feature A since v1.0.0; Feature B (L3/R3 shortcut) since v1.1.0.
 
 Environment of the last run: Bazzite 44, Steam client build `1792618285` (steamdeck_stable),
 Decky Loader 3.3.0, SteamGridDB 1.8.1 installed.
