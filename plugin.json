@@ -1,11 +1,11 @@
 {
   "name": "Store Shortcut",
   "author": "Store Shortcut contributors",
-  "flags": ["debug"],
+  "flags": [],
   "api_version": 1,
   "publish": {
     "tags": ["library", "store", "utility"],
-    "description": "Adds a \"Go to store page\" entry to the context menu of Steam library capsules.",
+    "description": "Open a library game's Steam store page from its context menu, or with L3/R3 while its capsule is focused.",
     "image": ""
   }
 }
