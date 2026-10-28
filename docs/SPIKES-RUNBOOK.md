@@ -1,11 +1,11 @@
 # Runbook: Phase 1 runtime spikes (S0.3, S0.4)
 
-Method 13.6 (d) of the design doc: Game Mode runs on its VT; Claude Code runs on a text
+Method 13.6 (d) of the design doc: Game Mode runs on its VT; the dev tools run on a text
 console (TTY). Probes are injected over CDP into Game Mode's Steam (nothing is built or
 deployed). A background recorder writes their console output to a file while the author
-uses the controller; Claude Code reads it afterwards.
+uses the controller; the recording is read afterwards.
 
-Setup for Claude Code (inside the TTY):
+Setup (inside the TTY):
 
 ```sh
 cd ~/dev/decky-store-shortcut

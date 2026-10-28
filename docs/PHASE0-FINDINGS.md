@@ -44,7 +44,7 @@ The three finder steps return the menu class; its prototype has `render`, `GetTa
 
 ### Method 13.6 (d) smoke test (2026-10-25): done
 
-Game Mode (`gamescope-session-plus ogui-steam`, logind session on VT1); Claude Code on tty3.
+Game Mode (`gamescope-session-plus ogui-steam`, logind session on VT1); dev tools on tty3.
 CDP target `SharedJSContext`, `dfl` = `object`, `href` = `…/routes/library/tab/Installed`
 (the desktop client instead reports `index.html?…USE_POPUPS=true…`). [V]
 Heartbeat probe recorded for 60 s while the author switched to Game Mode and back: 31/31
