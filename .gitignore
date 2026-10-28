@@ -58,3 +58,6 @@ cli/decky
 
 # Spike recordings (may contain library data)
 .spikes/
+
+# Local Claude Code notes
+CLAUDE.md
