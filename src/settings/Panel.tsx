@@ -1,6 +1,6 @@
-import { DropdownItem, PanelSection, PanelSectionRow, ToggleField } from "@decky/ui";
+import { DropdownItem, Field, PanelSection, PanelSectionRow, ToggleField } from "@decky/ui";
 import type { FeatureStatus } from "../features/status";
-import { LANGS, LANGUAGE_NAMES, t, type LanguageSetting, type StringKey } from "../i18n";
+import { LANGS, LANGUAGE_NAMES, t, type LanguageSetting } from "../i18n";
 import type { ShortcutButton } from "./schema";
 import { setSetting, useSettings } from "./store";
 
@@ -12,11 +12,25 @@ export interface PanelProps {
 
 const BUTTON_LABELS: Record<Exclude<ShortcutButton, "off">, string> = { l3: "L3", r3: "R3" };
 
+interface StatusLineProps {
+  status: FeatureStatus;
+  enabled: boolean;
+  prefix: "menu" | "button" | "footer";
+  vars?: Record<string, string>;
+}
+
 // One status line per feature (design 9.3): active, turned off, or unavailable with
 // the finder's reason.
-function statusLine(status: FeatureStatus, enabled: boolean, prefix: "menu" | "button" | "footer", vars?: Record<string, string>): string {
-  if (status.state === "unavailable") return t(`status_${prefix}_unavailable` as StringKey, { reason: status.reason });
-  return t(`status_${prefix}_${enabled ? "active" : "disabled"}` as StringKey, vars);
+function StatusLine({ status, enabled, prefix, vars }: StatusLineProps) {
+  const value = status.state === "unavailable"
+    ? t(`status_${prefix}_unavailable`, { reason: status.reason })
+    : t(`status_${prefix}_${enabled ? "active" : "disabled"}`, vars);
+
+  return (
+    <Field focusable disabled label={t(`status_${prefix}_label`)}>
+      {value}
+    </Field>
+  );
 }
 
 // Quick Access Menu panel (design 9.3).
@@ -95,17 +109,20 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
       </PanelSection>
       <PanelSection title={t("status_title")}>
         <PanelSectionRow>
-          <div>{statusLine(menuStatus, settings.menu_item_enabled, "menu")}</div>
+          <StatusLine status={menuStatus} enabled={settings.menu_item_enabled} prefix="menu" />
         </PanelSectionRow>
         <PanelSectionRow>
-          <div>
-            {statusLine(buttonStatus, buttonOn, "button", {
+          <StatusLine
+            status={buttonStatus}
+            enabled={buttonOn}
+            prefix="button"
+            vars={{
               button: buttonOn ? BUTTON_LABELS[settings.shortcut_button as Exclude<ShortcutButton, "off">] : "",
-            })}
-          </div>
+            }}
+          />
         </PanelSectionRow>
         <PanelSectionRow>
-          <div>{statusLine(footerStatus, buttonOn && settings.show_footer_hint, "footer")}</div>
+          <StatusLine status={footerStatus} enabled={buttonOn && settings.show_footer_hint} prefix="footer" />
         </PanelSectionRow>
       </PanelSection>
     </>
