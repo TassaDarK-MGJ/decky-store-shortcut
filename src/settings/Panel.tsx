@@ -54,6 +54,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
             selectedOption={settings.shortcut_button}
             disabled={buttonStatus.state === "unavailable"}
             onChange={(o) => setSetting("shortcut_button", o.data as ShortcutButton)}
+            layout="below"
           />
         </PanelSectionRow>
         <PanelSectionRow>
@@ -80,6 +81,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
             rgOptions={languages}
             selectedOption={settings.language}
             onChange={(o) => setSetting("language", o.data as LanguageSetting)}
+            layout="below"
           />
         </PanelSectionRow>
         <PanelSectionRow>
