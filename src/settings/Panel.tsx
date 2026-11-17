@@ -54,7 +54,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
         <PanelSectionRow>
           <ToggleField
             label={t("panel_menu_item")}
-            description={t("panel_menu_item_desc")}
+            explainer={t("panel_menu_item_desc")}
             checked={settings.menu_item_enabled}
             disabled={menuStatus.state === "unavailable"}
             onChange={(v) => setSetting("menu_item_enabled", v)}
@@ -63,7 +63,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
         <PanelSectionRow>
           <DropdownItem
             label={t("panel_button")}
-            description={t("panel_button_desc")}
+            explainer={t("panel_button_desc")}
             rgOptions={buttons}
             selectedOption={settings.shortcut_button}
             disabled={buttonStatus.state === "unavailable"}
@@ -74,7 +74,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
         <PanelSectionRow>
           <ToggleField
             label={t("panel_footer")}
-            description={t("panel_footer_desc")}
+            explainer={t("panel_footer_desc")}
             checked={settings.show_footer_hint}
             disabled={!buttonOn || footerStatus.state === "unavailable"}
             onChange={(v) => setSetting("show_footer_hint", v)}
@@ -83,7 +83,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
         <PanelSectionRow>
           <ToggleField
             label={t("panel_feedback")}
-            description={t("panel_feedback_desc")}
+            explainer={t("panel_feedback_desc")}
             checked={settings.unavailable_feedback}
             disabled={!buttonOn}
             onChange={(v) => setSetting("unavailable_feedback", v)}
@@ -101,7 +101,7 @@ export function Panel({ menuStatus, buttonStatus, footerStatus }: PanelProps) {
         <PanelSectionRow>
           <ToggleField
             label={t("panel_debug")}
-            description={t("panel_debug_desc")}
+            explainer={t("panel_debug_desc")}
             checked={settings.debug_logging}
             onChange={(v) => setSetting("debug_logging", v)}
           />
