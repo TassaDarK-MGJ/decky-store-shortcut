@@ -1,4 +1,3 @@
-import { quickAccessMenuClasses } from "@decky/ui";
 import { definePlugin } from "@decky/api";
 import { FaStore } from "react-icons/fa";
 import { log, setDebugLogging } from "./core/log";
@@ -39,7 +38,7 @@ export default definePlugin(() => {
 
   return {
     name: "Store Shortcut",
-    titleView: <div className={quickAccessMenuClasses.Title}>Store Shortcut</div>,
+    titleView: <div>Store Shortcut</div>,
     content: <Panel menuStatus={contextMenu.status} buttonStatus={buttonShortcut.button} footerStatus={buttonShortcut.footer} />,
     icon: <FaStore />,
     onDismount() {
