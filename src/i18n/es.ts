@@ -28,6 +28,6 @@ export const es: Strings = {
   status_button_unavailable: "no disponible ({reason})",
   status_footer_label: "Barra de botones",
   status_footer_active: "visible",
-  status_footer_disabled: "oculto",
+  status_footer_disabled: "oculta",
   status_footer_unavailable: "no disponible ({reason})",
 };

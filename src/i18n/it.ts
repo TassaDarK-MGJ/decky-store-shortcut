@@ -28,6 +28,6 @@ export const it: Strings = {
   status_button_unavailable: "non disponibile ({reason})",
   status_footer_label: "Barra dei pulsanti",
   status_footer_active: "visibile",
-  status_footer_disabled: "nascosto",
+  status_footer_disabled: "nascosta",
   status_footer_unavailable: "non disponibile ({reason})",
 };

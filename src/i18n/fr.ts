@@ -27,7 +27,7 @@ export const fr: Strings = {
   status_button_disabled: "désactivé",
   status_button_unavailable: "indisponible ({reason})",
   status_footer_label: "Barre de boutons",
-  status_footer_active: "affiché",
-  status_footer_disabled: "masqué",
+  status_footer_active: "affichée",
+  status_footer_disabled: "masquée",
   status_footer_unavailable: "indisponible ({reason})",
 };
