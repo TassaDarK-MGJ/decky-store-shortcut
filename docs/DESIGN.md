@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Status | Phase 1 released as v1.0.0 (2026-10-26). Phase 2 released as v1.1.0 (2026-10-27). Current release: v1.1.3 |
+| Status | Phase 1 released as v1.0.0 (2026-10-26). Phase 2 released as v1.1.0 (2026-10-27). Current release: v1.1.4 |
 | Plugin | `Store Shortcut` (package `decky-store-shortcut`, install folder `Store-Shortcut`) |
 | License | 0BSD for the project's own code; the template's BSD-3-Clause notice is kept (section 17) |
 | UI languages | English, French, Spanish, Italian, German (follows Steam's language) |
@@ -391,7 +391,7 @@ Missing keys in saved settings take their default, so no migration is needed. `s
 
 ### 9.3 Quick Access panel
 
-`PanelSection`, `PanelSectionRow`, `ToggleField`, `DropdownItem` from `@decky/ui`; `titleView` with `quickAccessMenuClasses` (not `staticClasses`). Contents: Feature A toggle, shortcut button dropdown, footer hint toggle, notice toggle, language dropdown, debug toggle. **Per-feature status** visible to the user ("active" or "unavailable (reason)") so that a Steam update that breaks a finder shows up immediately instead of failing silently.
+`PanelSection`, `PanelSectionRow`, `ToggleField`, `DropdownItem`, `Field` from `@decky/ui`; plain `titleView` (no extra class: the old title class is obsolete, see the v1.1.4 log entry). Setting descriptions use the `explainer` prop (shown on demand next to the label) and dropdowns use `layout="below"`. Contents: Feature A toggle, shortcut button dropdown, footer hint toggle, notice toggle, language dropdown, debug toggle. **Per-feature status** visible to the user ("active" or "unavailable (reason)"), rendered as focusable, disabled `Field` rows so they can be reached with the controller, so that a Steam update that breaks a finder shows up immediately instead of failing silently.
 
 ### 9.4 Settings cache
 
@@ -483,6 +483,7 @@ Full details: `docs/PHASE0-FINDINGS.md`.
 - **2026-10-27, end of Phase 2: v1.1.0.** README for both features. `safe(...)` restored around `openStorePage` in the menu item's `onSelected`. Checked in Game Mode: one hint, one navigation per press, menu OK.
 - **2026-10-27, H4.** Public repository. v1.1.1: `flags: []`, release packaging (`scripts/package.sh` → `out/Store-Shortcut-vX.Y.Z.zip`), GitHub release. v1.1.2: store image (`docs/store-image.png`, real Game Mode screenshots) as `publish.image`. Plugin Store requirements reviewed; submission prepared.
 - **2026-10-28, v1.1.3.** This English edition of the design document added to `docs/`. No code changes.
+- **2026-11-19, v1.1.4.** Quick Access panel polish contributed by @felixhirschfeld (PR #1): obsolete title class removed from `titleView`, dropdowns laid out below their label, status rows as focusable `Field`s, setting descriptions as `explainer`s. Checked in Game Mode. Gender agreement fixed in the footer status strings (es, fr, it).
 
 ---
 
@@ -610,7 +611,7 @@ Edit → `lint:legacy` and types (`pnpm run build`, TypeScript strict) → unit 
 | `getFocusNavController` | [V] | Feature B hook |
 | `MenuItem` | [V] | Feature A item |
 | `Navigation.NavigateToSteamWeb(https)`, `.NavigateToExternalWeb(https)` | [V] in Game Mode; `NavigateToSteamWeb(steam://)` breaks B (S0.4) | `core/store` |
-| `PanelSection`, `PanelSectionRow`, `ToggleField`, `DropdownItem`, `quickAccessMenuClasses` | [V] | Panel |
+| `PanelSection`, `PanelSectionRow`, `ToggleField`, `DropdownItem`, `Field` (`explainer` prop) | [V] | Panel |
 | `EAppType` and other `globals` enums | **Not exported at runtime** [V] | Local constants |
 
 ### Steam globals
